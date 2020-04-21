@@ -11,6 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import pages.LoginPage;
+import pages.PollPage;
+
 import java.io.IOException;
 
 public abstract class TestBase {
@@ -20,6 +23,8 @@ public abstract class TestBase {
     protected ExtentReports report;
     private ExtentHtmlReporter htmlReporter;
     protected ExtentTest test;
+    protected LoginPage loginPage;
+    protected PollPage pollPage;
 
     @BeforeSuite
     public void setUpSuite(){
@@ -42,6 +47,9 @@ public abstract class TestBase {
     @BeforeMethod
     public void setUpMethod(@Optional String url) {
         driver = Driver.getDriver();
+        loginPage=new LoginPage();
+        pollPage=new PollPage();
+
         wait = new WebDriverWait(driver, 10);
         softAssert = new SoftAssert();
         if (url==null){
