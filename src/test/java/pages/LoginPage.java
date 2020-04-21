@@ -11,10 +11,6 @@ public class LoginPage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-    // login2.nextbasecrm.com
-    // helpdesk11@cybertekschool.com
-    // helpdesk12@cybertekschool.com
-
     // Located the username input box
     @FindBy(name = "USER_LOGIN")
     public WebElement username;
@@ -42,8 +38,11 @@ public class LoginPage {
             case "helpdesk":
                 username = ConfigurationReader.getProperty("helpdesk_username");
                 password = ConfigurationReader.getProperty("helpdesk_password");
+                Driver.highlightElement(Driver.getDriver(), this.username);
                 this.username.sendKeys(username);
+                Driver.highlightElement(Driver.getDriver(), this.password);
                 this.password.sendKeys(password);
+                Driver.highlightElement(Driver.getDriver(), this.loginBttn);
                 loginBttn.click();
                 break;
             case "marketing":

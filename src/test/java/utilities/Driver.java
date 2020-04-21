@@ -1,8 +1,10 @@
 package utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -14,17 +16,18 @@ import org.openqa.selenium.safari.SafariDriver;
 
 public class Driver {
 
-    private Driver(){}
+    private Driver() {
+    }
 
     private static WebDriver driver;
 
-    public static WebDriver getDriver(){
+    public static WebDriver getDriver() {
         // check if the driver has value, if not assign a value
         if (driver == null) {
             // get the driver type from properties file
             String browser = ConfigurationReader.getProperty("browser");
 
-            switch (browser){
+            switch (browser) {
                 case "chrome":
                     WebDriverManager.chromedriver().setup();
                     driver = new ChromeDriver();
@@ -72,10 +75,23 @@ public class Driver {
 
     }
 
-    public static void closeDriver(){
+    public static void closeDriver() {
         // close the driver
         driver.quit();
         // then make the object null value
         driver = null;
+    }
+
+    public static void highlightElement(WebDriver driver, WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.getMessage();
+        }
+
+        js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
     }
 }

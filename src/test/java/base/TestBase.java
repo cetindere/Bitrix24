@@ -2,7 +2,7 @@ package base;
 
 import org.openqa.selenium.interactions.Actions;
 import pages.LoginPage;
-import pages.TestsPage;
+import pages.AnnouncementsPage;
 import utilities.BrowserUtils;
 import utilities.ConfigurationReader;
 import utilities.Driver;
@@ -25,7 +25,7 @@ public abstract class TestBase {
     private ExtentHtmlReporter htmlReporter;
     protected ExtentTest test;
     protected LoginPage loginPage;
-    protected TestsPage testsPage;
+    protected AnnouncementsPage announcementsPage;
     protected Actions actions;
 
     @BeforeSuite
@@ -50,7 +50,7 @@ public abstract class TestBase {
     @BeforeMethod
     public void setUpMethod(@Optional String url) {
         loginPage = new LoginPage();
-        testsPage = new TestsPage();
+        announcementsPage = new AnnouncementsPage();
         driver = Driver.getDriver();
         wait = new WebDriverWait(driver, 15);
         softAssert = new SoftAssert();

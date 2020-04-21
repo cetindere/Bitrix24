@@ -1,26 +1,13 @@
 package pages;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
-import java.util.List;
-
-
-public class TestsPage {
-    public TestsPage() {
+public class AnnouncementsPage {
+    public AnnouncementsPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
-
-    /*
-         I have created this TestsPage class, to store all elements for all Acceptance Criteria's,
-         under my User Story.
-
-         To be more clear, I will separate each AC by commenting them, or providing with information to it.
-    */
-
-
     /**
      * Below I will locate all elements for AC #1
      */
@@ -114,11 +101,11 @@ public class TestsPage {
 
     @FindBy(xpath = "(//td[@class='bxhtmled-right-c'])[1]/input")
     public WebElement inputVideoBox;
-
+    //
     @FindBy(id = "video_idPostFormLHE_blogPostForm-title")
     public WebElement videoTitle;
 
-    @FindBy(xpath = "//input[@id='undefined']")
+    @FindBy(xpath = "//button[@id='blog-submit-button-save']")
     public WebElement saveBttn;
 
     /**
@@ -156,7 +143,7 @@ public class TestsPage {
     public WebElement submitBttn6;
 
     /**
-     * Below, I will locate all elements for AC #
+     * Below, I will locate all elements for AC #7
      */
 
     @FindBy(id = "lhe_button_editor_blogPostForm")
@@ -165,7 +152,27 @@ public class TestsPage {
     @FindBy(xpath = "/html/body")
     public WebElement body;
 
+    /**
+     * Below, I will locate all elements for AC #8
+     */
 
+    @FindBy(xpath = "//span[@id='lhe_button_title_blogPostForm']")
+    public WebElement topic;
 
+    @FindBy(xpath = "//input[@id='POST_TITLE']")
+    public WebElement inputTopicBox;
 
+    @FindBy(xpath = "//input[@id='POST_TITLE']")
+    public WebElement verifyTopic;
+
+    /**
+     * Below, I will locate all elements for AC #9
+     */
+
+    @FindBy(xpath = "(//span[@class='feed-add-post-form-but-cnt feed-add-videomessage'])[1]")
+    public WebElement recordVideo;
+
+    @FindBy(xpath = "//span[@class='popup-window-button popup-window-button-blue'][.='Allow']")
+    public WebElement allow;
 }
+
