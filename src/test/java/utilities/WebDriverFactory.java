@@ -13,7 +13,7 @@ public class WebDriverFactory {
     //returns ChromeDriver and FirefoxDriver
 
     public static WebDriver getDriver(String browserType){
-        //local veriables
+
         WebDriver driver = null;
 
         switch (browserType.toLowerCase()){

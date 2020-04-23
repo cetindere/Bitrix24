@@ -24,6 +24,7 @@ public class Driver {
     public static WebDriver getDriver() {
         // check if the driver has value, if not assign a value
         if (driver == null) {
+
             // get the driver type from properties file
             String browser = ConfigurationReader.getProperty("browser");
 
@@ -68,11 +69,9 @@ public class Driver {
                     WebDriverManager.operadriver().setup();
                     driver = new OperaDriver();
                     break;
-
             }
         }
         return driver;
-
     }
 
     public static void closeDriver() {
@@ -85,13 +84,11 @@ public class Driver {
     public static void highlightElement(WebDriver driver, WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.getMessage();
         }
-
         js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
     }
 }

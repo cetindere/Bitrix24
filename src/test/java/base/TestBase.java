@@ -34,11 +34,9 @@ public abstract class TestBase {
         String path = System.getProperty("user.dir") + "/test-output/report.html";
         htmlReporter = new ExtentHtmlReporter(path);
         htmlReporter.config().setReportName("Bitrix24 Automated Tests");
-
         report.attachReporter(htmlReporter);
         report.setSystemInfo("Environment", "QA");
         report.setSystemInfo("Browser", ConfigurationReader.getProperty("browser"));
-
     }
 
     @AfterSuite
@@ -60,7 +58,6 @@ public abstract class TestBase {
             driver.get(url);
         }
         driver.get(ConfigurationReader.getProperty("url"));
-
     }
 
     @AfterMethod
@@ -70,14 +67,11 @@ public abstract class TestBase {
         if (iTestResult.getStatus() == ITestResult.FAILURE) {
             // tell extent report that the test failed
             test.fail(iTestResult.getName());
-
             // take screen shot of the screen and save location
             String screenshot = BrowserUtils.getScreenshot(iTestResult.getName());
             // show path to screenshot
             test.addScreenCaptureFromPath(screenshot);
         }
-
-
         Thread.sleep(3000);
         Driver.closeDriver();
         softAssert.assertAll();
