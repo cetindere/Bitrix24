@@ -1,20 +1,24 @@
 package Pages;
 
+import Utilities.ConfigurationReader;
 import Utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class TestPage1 {
-  public TestPage1(){
-    PageFactory.initElements(Driver.getDriver(),this);
+import java.security.PublicKey;
+import java.util.List;
+
+public class MessagePage {
+  public MessagePage() {
+    PageFactory.initElements(Driver.getDriver(), this);
   }
    /*
       store all elements for all Acceptance Criteria's,
         each providing with information to it.
     */
 
-   //AC #11. User should be able to click on upload files icon to upload files and pictures from local disks, download from external drive, select documents from bixtrix24, and create files to upload.
+  //AC #11. User should be able to click on upload files icon to upload files and pictures from local disks, download from external drive, select documents from bixtrix24, and create files to upload.
 
 
   @FindBy(xpath = "//span[contains(text(),'Message')]")
@@ -37,21 +41,27 @@ public class TestPage1 {
   @FindBy(xpath = "//span[.='Select document']")
   public WebElement selectButton;
 
- //AC#2 User should be able to add users from selecting contact from E-mail user, Employees and Departments and Recent contact lists.
+  //AC#2 User should be able to add users from selecting contact from E-mail user, Employees and Departments and Recent contact lists.
 
-  @FindBy(id = "bx-destination-tag")
+  @FindBy(xpath = "//a[contains(text(),'Add more')]")
   public WebElement addMore;
-  @FindBy(xpath = "//a[@class='bx-finder-box-tab bx-lm-tab-email']")
+  @FindBy(css = ".bx-finder-box-tab.bx-lm-tab-email")
   public WebElement emailUser;
-  @FindBy(xpath = "//a[@class='bx-finder-box-tab bx-lm-tab-last bx-finder-box-tab-selected']")
+  @FindBy(css = ".bx-finder-box-tab.bx-lm-tab-last.bx-finder-box-tab-selected")
   public WebElement recent;
-  @FindBy(xpath = "//a[@class='bx-finder-box-tab bx-lm-tab-department']")
+  @FindBy(xpath = "//span[@class='bx-finder-groupbox-content']/a")
+  public List<WebElement> recentList;
+  @FindBy(css = ".bx-finder-box-tab.bx-lm-tab-department")
   public WebElement empAndDep;
+  @FindBy(xpath = "//div[contains(@class,'bx-finder-company-department-employees')]/a")
+  public List<WebElement> empEmailList;
 
   //AC #3 User should be able to attach link by clicking on the link icon.
 
   @FindBy(xpath = "//*[@id='bx-b-link-blogPostForm']/span/i")
   public WebElement linkAttachIcon;
+  @FindBy(name = "cancel")
+  public WebElement cancelUrlAttach;
 
   //AC 4. User should be able to insert videos by clicking on the video icon and entering the video URL.
 
@@ -77,11 +87,10 @@ public class TestPage1 {
 
   //AC 7. User should be able to click on Visual Editor and see the editor text-bar displays on top of the message box.
 
-  @FindBy(xpath = "//span[@class='feed-add-post-form-editor-btn feed-add-post-form-btn-active']")
+  @FindBy(xpath = "//span[@id='lhe_button_editor_blogPostForm']")
   public WebElement visualEdIcon;
   @FindBy(xpath = "//span[@class='bxhtmled-top-bar-wrap']")
   public WebElement testBarDisplay;
-
 
 
   //AC 8. User should be able to click on the Topic icon to see the Message Topic text box displays on top of the message box.
@@ -97,9 +106,57 @@ public class TestPage1 {
   public WebElement recordVideo;
   @FindBy(xpath = "//span[.='Allow']")
   public WebElement allow;
-
   @FindBy(id = "blog-submit-button-save")
-  public WebElement sendBttn;
+  public WebElement saveButton;
+  @FindBy(xpath = "//div[.='Cannot access your camera and microphone.']")
+  public WebElement cameraAccessDenied;
+  @FindBy (xpath = "//span[.='Close']")
+  public WebElement closeBttn;
 
 
+  //login locators
+
+  @FindBy(name = "USER_LOGIN")
+  public WebElement username;
+  @FindBy(name = "USER_PASSWORD")
+  public WebElement password;
+  @FindBy(className = "login-btn")
+  public WebElement submit;
+  @FindBy(className = "errortext")
+  public WebElement error;
+
+  // login2.nextbasecrm.com
+  // helpdesk11@cybertekschool.com
+  // helpdesk12@cybertekschool.com
+
+
+  public void login(String user) {
+    String username;
+    String password;
+    switch (user) {
+      case "helpdesk":
+        username = ConfigurationReader.getProperty("helpdesk_username");
+        password = ConfigurationReader.getProperty("password");
+        this.username.sendKeys(username);
+        this.password.sendKeys(password);
+        submit.click();
+        break;
+      case "marketing":
+        username = ConfigurationReader.getProperty("marketing_username");
+        password = ConfigurationReader.getProperty("password");
+        this.username.sendKeys(username);
+        this.password.sendKeys(password);
+        submit.click();
+        break;
+      case "hr":
+        username = ConfigurationReader.getProperty("hr_username");
+        password = ConfigurationReader.getProperty("password");
+        this.username.sendKeys(username);
+        this.password.sendKeys(password);
+        submit.click();
+        break;
+      default:
+        System.out.println(error.getText());
+    }
+  }
 }
