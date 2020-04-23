@@ -53,7 +53,7 @@ public class MessagePage {
   public List<WebElement> recentList;
   @FindBy(css = ".bx-finder-box-tab.bx-lm-tab-department")
   public WebElement empAndDep;
-  @FindBy(xpath = "//div[contains(@class,'bx-finder-company-department-employees')]/a")
+  @FindBy(xpath = "//div[@class='bx-finder-company-department-employees']/a")
   public List<WebElement> empEmailList;
 
   //AC #3 User should be able to attach link by clicking on the link icon.

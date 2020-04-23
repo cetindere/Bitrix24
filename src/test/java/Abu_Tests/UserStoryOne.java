@@ -46,7 +46,6 @@ public class UserStoryOne extends TestBase {
   @Test(description = "add users from selecting contact from E-mail user, Employees and Departments and Recent contact lists.")
   public void test2() {
     test = report.createTest("Selecting Contact");
-//    driver.get(ConfigurationReader.getProperty("url"));
 
     getMessageBox();
 
@@ -68,8 +67,8 @@ public class UserStoryOne extends TestBase {
 
     BrowserUtils.wait(1);
     test.info("Select from Employees and Departments List");
-    System.out.println(BrowserUtils.getElementsText(messagePage.empEmailList).get(1));
-    messagePage.empEmailList.get(2).click();
+    messagePage.empEmailList.get(5).click();
+    BrowserUtils.wait(1);
     test.pass("Add users selection is verified");
 
   }
