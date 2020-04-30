@@ -13,6 +13,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Driver {
 
@@ -90,5 +92,17 @@ public class Driver {
             e.getMessage();
         }
         js.executeScript("arguments[0].setAttribute('style','border: solid 2px white')", element);
+    }
+
+    // These method I think is useful, for getting boolean -> whether element isClickable or not
+    // With this statement I think we can if statement
+    public static boolean isClickable(WebElement element, WebDriver driver) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 6);
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

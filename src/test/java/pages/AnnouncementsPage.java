@@ -1,4 +1,5 @@
 package pages;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,6 +9,7 @@ public class AnnouncementsPage {
     public AnnouncementsPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
+
     /**
      * Below I will locate all elements for AC #1
      */
@@ -32,7 +34,6 @@ public class AnnouncementsPage {
 
     @FindBy(xpath = "(//span[contains(text(),'Create')])[1]")
     public WebElement createDesktop;
-
 
     /**
      * Below I will locate all elements for AC #2
@@ -99,15 +100,21 @@ public class AnnouncementsPage {
     @FindBy(xpath = "//span[@class='bxhtmled-top-bar-btn bxhtmled-button-video']/i")
     public WebElement insertVideo;
 
+
     @FindBy(xpath = "(//td[@class='bxhtmled-right-c'])[1]/input")
     public WebElement inputVideoBox;
-    //
+
     @FindBy(id = "video_idPostFormLHE_blogPostForm-title")
     public WebElement videoTitle;
 
+    @FindBy(id = "video_idPostFormLHE_blogPostForm-size")
+    public WebElement videoSize;
+
+    @FindBy(xpath = "//input[@type='button']")
+    public WebElement saveBttn4;
+
     @FindBy(xpath = "//button[@id='blog-submit-button-save']")
     public WebElement saveBttn;
-
     /**
      * Below, I will locate all elements for AC #5
      */
@@ -164,6 +171,13 @@ public class AnnouncementsPage {
 
     @FindBy(xpath = "//input[@id='POST_TITLE']")
     public WebElement verifyTopic;
+
+    //verification if it topic input is presented
+    @FindBy(xpath = "//input[@value='N']")
+    public WebElement yesOrNo;
+
+    @FindBy(xpath = "//div[@class='feed-add-close-icon']")
+    public WebElement x;
 
     /**
      * Below, I will locate all elements for AC #9

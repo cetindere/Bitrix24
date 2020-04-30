@@ -3,7 +3,7 @@ package tests;
 
 import base.TestBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import utilities.BrowserUtils;
@@ -26,7 +26,7 @@ public class US_7 extends TestBase {
         I can reuse all steps, just calling this method.
      */
     public void intro() {
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         test.info("Navigated to https://login2.nextbasecrm.com/");
         driver.get(ConfigurationReader.getProperty("url"));
         test.info("Logged, as a helpdesk11");
@@ -44,6 +44,8 @@ public class US_7 extends TestBase {
         announcementsPage.announcementBttn.click();
     }
 
+
+    // @Ignore () (data provider ="name")
     @Test(priority = 1, description = "User should be able to click on upload files icon to upload files and pictures from" +
             " local disks, download from external drive, select documents from bixtrix24, and create files to upload.")
     public void AC_1() {
@@ -55,7 +57,14 @@ public class US_7 extends TestBase {
         Driver.highlightElement(Driver.getDriver(), announcementsPage.uploadIcon);
         announcementsPage.uploadIcon.click();
         test.info("Verified that \"Upload Files and Images\" is enabled");
+
+
         softAssert.assertTrue(announcementsPage.uploadFilesAndImages.isEnabled(), "Upload Files and Images is not enabled");
+        announcementsPage.uploadFilesAndImages.sendKeys("/Users/EdilbekBrowne/Desktop/CYBERTEK/Selenium/Projects/Btrix24 " +
+                "credential _B15_VA.xlsx");
+        BrowserUtils.wait(5);
+
+
         test.info("Verified that \"Download from external drive\"  text is visible on page");
         assertEquals(announcementsPage.externalDrive.getText(), "Download from external drive");
         test.info("Verified that \"Select document from Bitrix24\"  text is visible on page");
@@ -136,25 +145,27 @@ public class US_7 extends TestBase {
         wait.until(ExpectedConditions.visibilityOf(announcementsPage.inputVideoBox));
         Driver.highlightElement(Driver.getDriver(), announcementsPage.inputVideoBox);
         announcementsPage.inputVideoBox.click();
-
-        /**
-         * Need to find out with Marufjon. When I perform manual testing, providing URL it finds.
-         * But when I automate, the video can not be found. Bitrix is showing error:
-         *  - [SOCKET] Socket connection error.;
-         *  - [FVID404] The video was not found;
-         */
         test.info("Verified, user is able to type in \"Input box\"");
         Driver.highlightElement(Driver.getDriver(), announcementsPage.inputVideoBox);
+        //TODO:
+        // Performed typing via JS(not letter by letter) -> do not respond for the video
+        // Scrips works fine, but some times Website do not respons ->
+        // -> "No internet connection or the video you have uploaded previously, not visible"
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("arguments[0].value='https://www.youtube.com/watch?v=fvCdLmxnkj0';", announcementsPage.inputVideoBox);
         announcementsPage.inputVideoBox.sendKeys("https://www.youtube.com/watch?v=fvCdLmxnkj0");
-        // continue
-        Thread.sleep(2000);
+        Thread.sleep(5000);
         wait.until(ExpectedConditions.visibilityOf(announcementsPage.videoTitle));
-        // Pay attention to below code
+        wait.until(ExpectedConditions.visibilityOf(announcementsPage.videoSize));
+        BrowserUtils.wait(5);
+        Driver.highlightElement(Driver.getDriver(), announcementsPage.saveBttn4);
+        announcementsPage.saveBttn4.click();
+        BrowserUtils.wait(3);
+
         Driver.highlightElement(Driver.getDriver(), announcementsPage.saveBttn);
+        wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.saveBttn));
         announcementsPage.saveBttn.click();
-//        wait.until(ExpectedConditions.visibilityOf(testsPage.iframe));
-//        driver.switchTo().frame(testsPage.iframe);
-        // solution: 1) more wait; 2) Use JavaScrip 3) I don't know
+        BrowserUtils.wait(3);
         test.pass("\"PASS\" - authorized user, is able to perform above operations");
     }
 
@@ -166,8 +177,7 @@ public class US_7 extends TestBase {
         Driver.highlightElement(Driver.getDriver(), announcementsPage.quoteText);
         announcementsPage.quoteText.click();
         /*
-        In the TestsPage, I have located element,
-        now I need to switch the frames in order to sendKeys();
+        In the TestsPage, I have located element, now I need to switch the frames in order to sendKeys();
         To switch frames you can use Index and WebElement (of the frame)
         Ex: driver.switchTo().frame(0);
          */
@@ -225,10 +235,13 @@ public class US_7 extends TestBase {
         driver.switchTo().frame(0);
         // TODO: Need to find an answer, on how to select the text "COMMAND + A" using Selenium WebDriver
         Driver.highlightElement(Driver.getDriver(), announcementsPage.body);
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("arguments[0].value='https://www.youtube.com/watch?v=fvCdLmxnkj0';", announcementsPage.inputVideoBox);
         announcementsPage.body.sendKeys("Hello, Cybertek People!!!");
-//        announcementsPage.body.sendKeys(Keys.COMMAND + "a");
-//        actions.doubleClick(testsPage.body).doubleClick().build().perform();
-        Thread.sleep(5000);
+        test.info("Verified, user is able to switch to parent \"iFrame\"");
+        driver.switchTo().parentFrame();
+        test.info("Verified, user is able to click on button using \"JavaScript\"");
+        BrowserUtils.clickWithJS(announcementsPage.sendBttn);
         test.pass("\"PASS\" - authorized user, is able to perform above operations");
     }
 
@@ -239,12 +252,28 @@ public class US_7 extends TestBase {
         test = report.createTest("\"AC #8\" - User, should be able to click on \"Topic Icon\" and see message box");
         intro();
         test.info("Verified, user is able to click on \"Topic Icon\"");
-        wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.topic));
-        Driver.highlightElement(Driver.getDriver(), announcementsPage.topic);
-        announcementsPage.topic.click();
+
+        if (!Driver.isClickable(announcementsPage.x, driver)) {
+            System.out.println("1 Method was run");
+            wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.topic));
+            Driver.highlightElement(Driver.getDriver(), announcementsPage.topic);
+            announcementsPage.topic.click();
+
+        } else {
+            System.out.println("2 Method was run");
+            wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.topic));
+            Driver.highlightElement(Driver.getDriver(), announcementsPage.topic);
+            announcementsPage.topic.click();
+            wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.topic));
+            Driver.highlightElement(Driver.getDriver(), announcementsPage.topic);
+            announcementsPage.topic.click();
+        }
+
         test.info("Verified, user is able to type inside \"Topic box\"");
         wait.until(ExpectedConditions.elementToBeClickable(announcementsPage.verifyTopic));
         Driver.highlightElement(Driver.getDriver(), announcementsPage.inputTopicBox);
+        announcementsPage.inputTopicBox.click();
+        announcementsPage.inputTopicBox.clear();
         announcementsPage.inputTopicBox.sendKeys("Yes, user is able to see Topics text box");
         test.pass("\"PASS\" - authorized user, is able to perform above operations");
     }
@@ -277,5 +306,12 @@ public class US_7 extends TestBase {
         Need to come with better approach, It hasn't been finished
          */
         test.pass("\"PASS\" - authorized user, is able to perform above operations");
+    }
+
+
+    @Test
+    public void test() {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(announcementsPage.addMention).sendKeys("skdjfknjs").build().perform();
     }
 }

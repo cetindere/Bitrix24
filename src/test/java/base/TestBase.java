@@ -28,6 +28,7 @@ public abstract class TestBase {
     protected AnnouncementsPage announcementsPage;
     protected Actions actions;
 
+
     @BeforeSuite
     public void setUpSuite() {
         report = new ExtentReports();
@@ -50,7 +51,7 @@ public abstract class TestBase {
         loginPage = new LoginPage();
         announcementsPage = new AnnouncementsPage();
         driver = Driver.getDriver();
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, 10);
         softAssert = new SoftAssert();
         if (url == null) {
             driver.get(ConfigurationReader.getProperty("url"));
