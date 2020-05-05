@@ -1,11 +1,9 @@
 package Utilities;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -95,4 +93,14 @@ public class BrowserUtils {
         FileUtils.copyFile(source, finalDestination);
         return target;
     }
-}
+    // These method I think is useful, for getting boolean -> whether element isClickable or not
+    // With this statement I think we can if statement
+    public static boolean isClickable(WebElement element, WebDriver driver) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 6);
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+}}
