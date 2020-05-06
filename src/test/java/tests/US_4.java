@@ -70,15 +70,19 @@ public class US_4 extends TestBase {
         pollPage.addMore.click();
         BrowserUtils.wait(3);
 
-        //test.info("click email users");
-
-       // wait.until(ExpectedConditions.elementToBeClickable(pollPage.emailUser));
-        pollPage.emailUser.click();
         wait.until(ExpectedConditions.elementToBeClickable(pollPage.employeesAndDepartments));
         pollPage.employeesAndDepartments.click();
-        test.info("verify page contains \"cyber\"");
         assertTrue(pollPage.cyberVet.getText().contains("Cyber"));
         assertEquals(pollPage.cyberVet.getText(),"Cyber Vet");
+
+        //test.info("click email users");
+
+        wait.until(ExpectedConditions.elementToBeClickable(pollPage.emailUser));
+        pollPage.emailUser.click();
+
+        test.info("verify page contains \"cyber\"");
+
+
         //test.info("click recent user");
         wait.until(ExpectedConditions.elementToBeClickable(pollPage.recentUser));
         pollPage.recentUser.click();

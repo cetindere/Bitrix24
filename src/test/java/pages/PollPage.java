@@ -68,16 +68,16 @@ public class PollPage {
     @FindBy(xpath= "//a[@href='#switchTab'][contains(text(),'Recent')]")
     public WebElement recentUser;
 
-    @FindBy(xpath = "//a[@id='destination7168194_last_UA']")
+    @FindBy(xpath = "(//div[@class='bx-finder-box-item-t7-name'])[1]")
     public WebElement allEmployees;
 
-    @FindBy(xpath = "//a[href='#switchTab'][contains(text(),'Employees and departments']")
+    @FindBy(xpath = "//div[@id='popup-window-content-BXSocNetLogDestination']//a[2]")
     public WebElement employeesAndDepartments;
 
-    @FindBy(xpath = "//a[@class='bx-finder-box-tab bx-lm-tab-email bx-finder-box-tab-selected'][contains(text(),'E-mail users')]")
+    @FindBy(xpath = "//div[@id='popup-window-content-BXSocNetLogDestination']//a[3]")
     public WebElement emailUser;
 
-    @FindBy(xpath = "//div[@class='bx-finder-company-department-text'][contains(text(),'Cyber Vet')")
+    @FindBy(className = "bx-finder-company-department-text")
     public WebElement cyberVet;
 
     @FindBy(xpath = "//span[@class='bx-finder-groupbox-name']")
