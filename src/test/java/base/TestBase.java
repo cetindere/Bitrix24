@@ -3,6 +3,7 @@ package base;
 import org.openqa.selenium.interactions.Actions;
 import pages.LoginPage;
 import pages.AnnouncementsPage;
+import pages.TaskTagPage;
 import utilities.BrowserUtils;
 import utilities.ConfigurationReader;
 import utilities.Driver;
@@ -27,6 +28,7 @@ public abstract class TestBase {
     protected LoginPage loginPage;
     protected AnnouncementsPage announcementsPage;
     protected Actions actions;
+    protected TaskTagPage taskTagPage;
 
     @BeforeSuite
     public void setUpSuite() {
@@ -58,6 +60,8 @@ public abstract class TestBase {
             driver.get(url);
         }
         driver.get(ConfigurationReader.getProperty("url"));
+        taskTagPage = new TaskTagPage();
+        actions = new Actions(driver);
     }
 
     @AfterMethod
